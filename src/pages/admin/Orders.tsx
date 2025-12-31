@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 const AdminOrders = () => {
   // Mock data - in real app, fetch from API
-  const orders = []
+  const orders: any[] = []
 
   return (
     <>

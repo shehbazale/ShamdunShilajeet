@@ -32,9 +32,15 @@ const Login = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      await dispatch(login(data)).unwrap()
+      const result = await dispatch(login(data)).unwrap()
       toast.success('Login successful!')
-      navigate('/dashboard')
+      
+      // Navigate based on user role
+      if (result.user?.role === 'admin') {
+        navigate('/admin')
+      } else {
+        navigate('/dashboard')
+      }
     } catch (error: any) {
       toast.error(error.message || 'Login failed. Please check your credentials.')
     }

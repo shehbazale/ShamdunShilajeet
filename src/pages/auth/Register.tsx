@@ -42,14 +42,20 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      await dispatch(register({
+      const result = await dispatch(register({
         name: data.name,
         email: data.email,
         password: data.password,
         phone: data.phone || undefined,
       })).unwrap()
       toast.success('Registration successful!')
-      navigate('/dashboard')
+      
+      // Navigate based on user role (though new registrations are typically regular users)
+      if (result.user?.role === 'admin') {
+        navigate('/admin')
+      } else {
+        navigate('/dashboard')
+      }
     } catch (error: any) {
       toast.error(error.message || 'Registration failed. Please try again.')
     }
